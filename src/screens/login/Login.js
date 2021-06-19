@@ -11,6 +11,62 @@ import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 class Login extends Component {
+    constructor() {
+        super();
+        this.state = {
+            username: "",
+            usernameRequired: "dispNone",
+            loginPassword: "",
+            loginPasswordRequired: "dispNone",
+            usernamePasswordIncorrect: "dispNone",
+        };
+    }
+
+    /* Event Triggers When Username Field Value Changed */
+    inputUsernameChangeHandler = (event) => {
+        this.setState({ username: event.target.value });
+    };
+
+    /* Event Triggers When Password Field Value Changed */
+    inputPasswordChangeHandler = (event) => {
+        this.setState({ loginPassword: event.target.value });
+    };
+
+    /* Event Triggers When Login Button Pressed */
+    loginClickHandler = () => {
+        let tempUsername = "test";
+        let tempPassword = "test@123";
+        let accessToken =
+            "IGQVJVbnlPaTNjRkl1MTJ4ZAkR6OXVZARVBpOG9nc18tdFRjM0VpdEVDcjBGS0Q3c1BMeGZAxWUlmOHQ2ajRKWEk0V3dxZAkdFTS1nb3JFeFNTOUhZANUE2b1d0Q0xyMEJTUnduRE4tNkNvdEZAuMGFTQ3ZA0UkFxaWNmODR5N2dn";
+
+        /* Initial Set usernamePasswordIncorrect state as display none */
+        this.setState({ usernamePasswordIncorrect: "dispNone" });
+
+        /* Toggle username display property */
+        this.state.username === ""
+            ? this.setState({ usernameRequired: "dispBlock" })
+            : this.setState({ usernameRequired: "dispNone" });
+
+        /* Toggle password display property */
+        this.state.loginPassword === ""
+            ? this.setState({ loginPasswordRequired: "dispBlock" })
+            : this.setState({ loginPasswordRequired: "dispNone" });
+
+        if (
+            this.state.username === tempUsername &&
+            this.state.loginPassword === tempPassword
+        ) {
+            window.sessionStorage.setItem(
+                "access-token",
+                accessToken
+            ); /* save access-token in session storage */
+            //redirect to home page
+        } else {
+            if (this.state.username !== "" && this.state.loginPassword !== "") {
+                this.setState({ usernamePasswordIncorrect: "dispBlock" });
+            }
+        }
+    };
 
     render() {
         return (
@@ -28,8 +84,10 @@ class Login extends Component {
                                 <Input className="inputBox"
                                     id="username"
                                     type="text"
+                                    username={this.state.username}
+                                    onChange={this.inputUsernameChangeHandler}
                                 />
-                                <FormHelperText>
+                                <FormHelperText className={this.state.usernameRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
                             </FormControl>
@@ -40,12 +98,18 @@ class Login extends Component {
                                 <Input className="inputBox"
                                     id="password"
                                     type="password"
+                                    loginPassword={this.state.loginPassword}
+                                    onChange={this.inputPasswordChangeHandler}
                                 />
-                                <FormHelperText>
+                                <FormHelperText className={this.state.loginPasswordRequired}>
                                     <span className="red">required</span>
                                 </FormHelperText>
                                 <FormHelperText
+                                    className={this.state.usernamePasswordIncorrect}
                                 >
+                                    <span className="red">
+                                        Incorrect username and/or password
+                                    </span>
                                 </FormHelperText>
                             </FormControl>
                             <br />
@@ -53,6 +117,7 @@ class Login extends Component {
                             <Button
                                 variant="contained"
                                 color="primary"
+                                onClick={this.loginClickHandler}
                             >
                                 LOGIN
                             </Button>
