@@ -1,0 +1,19 @@
+/* Set Css Styles for Header Section:- */
+
+.app-header {
+	background-color: #263238;
+	width: 100%;
+	padding: 8px 32px 8px 16px;
+}
+
+.header-title {
+	color: #fff;
+	font-size: 18px;
+}
+
+.searchBar{
+	margin-top: none;
+	float:right;
+    margin-right: 50px;
+    margin-top:1px;
+}
