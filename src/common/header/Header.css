@@ -10,3 +10,10 @@
 	color: #fff;
 	font-size: 18px;
 }
+
+.searchBar{
+	margin-top: none;
+	float:right;
+    margin-right: 50px;
+    margin-top:1px;
+}

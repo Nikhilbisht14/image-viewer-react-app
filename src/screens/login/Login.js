@@ -9,6 +9,21 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { withStyles } from '@material-ui/core/styles';
+
+
+const styles = theme => ({
+    formControl: {
+        margin: theme.spacing(),
+        width: 350
+    },
+
+    buttonControl: {
+        margin: theme.spacing(),
+        pointer: 'cursor'
+    }
+})
+
 
 class Login extends Component {
     constructor() {
@@ -61,6 +76,7 @@ class Login extends Component {
                 accessToken
             ); /* save access-token in session storage */
             //redirect to home page
+            this.props.history.push('/home');
         } else {
             if (this.state.username !== "" && this.state.loginPassword !== "") {
                 this.setState({ usernamePasswordIncorrect: "dispBlock" });
@@ -69,9 +85,15 @@ class Login extends Component {
     };
 
     render() {
+        // Used FormControl,Input and Buttons for Login card. Also used FormHelperText for showing inline errors
+        const { classes } = this.props;
         return (
             <div>
-                <Header title="Image Viewer" />
+                <Header
+                    title="Image Viewer"
+                    parent="login"
+                    history={this.props.history}
+                />
                 <div className="card-container">
                     <Card variant="outlined" className="login-card">
                         <CardContent>
@@ -79,7 +101,7 @@ class Login extends Component {
                                 LOGIN
                             </Typography>
                             <br />
-                            <FormControl required>
+                            <FormControl className={classes.formControl} required>
                                 <InputLabel htmlFor="username">Username</InputLabel>
                                 <Input className="inputBox"
                                     id="username"
@@ -93,7 +115,7 @@ class Login extends Component {
                             </FormControl>
                             <br />
                             <br />
-                            <FormControl required>
+                            <FormControl className={classes.formControl} required>
                                 <InputLabel htmlFor="password">Password</InputLabel>
                                 <Input className="inputBox"
                                     id="password"
@@ -114,13 +136,16 @@ class Login extends Component {
                             </FormControl>
                             <br />
                             <br />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={this.loginClickHandler}
-                            >
-                                LOGIN
-                            </Button>
+                            {/* Login Button */}
+                            <FormControl className={classes.buttonControl} required> 
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.loginClickHandler}
+                                >
+                                    LOGIN
+                                </Button>
+                            </FormControl>
                         </CardContent>
                     </Card>
                 </div>
@@ -129,4 +154,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withStyles(styles)(Login);
