@@ -140,7 +140,7 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Header title="Image Viewer" showHomePage="home"></Header>
+        <Header title="Image Viewer" showHomePage="home" history={this.props.history}></Header>
         <GridList cols={2} cellHeight={500} className={classes.gridListMain}>
           {tileData.map((eg) => (
             // Card header
