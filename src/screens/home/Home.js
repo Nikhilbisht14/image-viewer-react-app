@@ -12,6 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import LionelMessi from '../../assests/LionelMessi.jpg'
 import Divider from "@material-ui/core/Divider";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
+import InputLabel from "@material-ui/core/InputLabel";
 
 
 const styles = (theme) => ({
@@ -21,7 +25,14 @@ const styles = (theme) => ({
   },
   gridListMain: {
     transform: "translateZ(0)",
-    width: "1500px",
+    width: "1265px",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formControl: {
+    margin: theme.spacing(),
+    minWidth: 240,
+    maxWidth: 240,
   },
   title: {
     color: theme.palette.primary.light,
@@ -46,24 +57,61 @@ const postStyle = {
 };
 
 const gridListTileStyle = {
-  width: "650px",
-  margin: "20px",
+  width: "590px",
+  margin: "10px",
 };
 
 const cardStyle = {
-  width: "100%",
+  width: "80%",
   height: "100%",
 };
 
+const commentStyle = {
+  formControlStyle: {
+    width: "80%",
+    marginRight: "10px",
+    height: "40px",
+    marginTop: "60px",
+  },
+  commentButtonStyle: {
+    height: "45px",
+    marginTop: "-50px",
+    marginLeft: "470px",
+  },
+};
+
+const tileData = [
+  {
+    img: "../../assests/LionelMessi.jpg",
+    content: 'content1',
+    author: 'author1',
+    likes: '10'
+  },
+  {
+    img: "LionelMessi",
+    content: 'content2',
+    author: 'author2',
+    likes: '20'
+  },
+  {
+    img: "LionelMessi",
+    content: 'content3',
+    author: 'author3',
+    likes: '30',
+  },
+  {
+    img: "LionelMessi",
+    content: 'content4',
+    author: 'author4',
+    likes: '40',
+  }
+];
 
 class Home extends Component {
 
   constructor() {
     super();
   }
-
-
-
 
   componentDidMount() {
     let data = null;
@@ -92,42 +140,48 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Header title="Image Viewer" showHomePage="home"></Header>      
-        <div className="grid-container">
-          <GridList cols={2} cellHeight={900} className={classes.gridListMain}>
-            <GridListTile key="post1" style={gridListTileStyle}>
+        <Header title="Image Viewer" showHomePage="home"></Header>
+        <GridList cols={2} cellHeight={500} className={classes.gridListMain}>
+          {tileData.map((eg) => (
+            // Card header
+            <GridListTile cols={2} key="post1" style={gridListTileStyle}>
               <Card style={{ cardStyle }} variant="outlined">
                 <CardHeader
-                  avatar={<Avatar aria-label="recipe" src={LionelMessi}></Avatar>}
+                  avatar={<Avatar aria-label="recipe" src={eg.img}></Avatar>}
                   title="Messi"
                   subheader="24/06/21 22:33:44"
                 ></CardHeader>
+
+                {/* Image, image-content and likes section */}
                 <CardContent>
-                  <img src={LionelMessi} alt="imag1" className="post-image" />
-                  <br />
-                  <br />
+                  <img src={eg.img} alt="imag1" className="post-image" /><br /><br/>
                   <Divider style={{ backgroundColor: "#c0c0c0" }} />
                   <Typography variant="h5" style={postStyle.captionStyle}>
-                    Greatest footballer of all the time.
+                    {eg.content}
                   </Typography>
                   <div>
-                    <Typography
-                      display="inline"
-                      variant="caption"
-                      style={postStyle.hashtagStyle}
-                    >
-                      #Best #skills #Passion
-                    </Typography>
+                    <Typography display="inline" variant="caption" style={postStyle.hashtagStyle}>#Best #skills #Passion</Typography>
                   </div>
                   <div className="like-section">
                     <FavoriteBorderIcon style={postStyle.likeIconStyle} />
-                    <span className="like-post"> 10 likes</span>
+                    <span className="like-post">{eg.likes}</span>
                   </div>
+
+                  {/* Comment section */}
+                  <div className="comment-section">
+                    <FormControl style={commentStyle.formControlStyle}>
+                      <InputLabel htmlFor="addComment">Add a comment</InputLabel>
+                      <Input id="addComment" type="text" placeholder="Add a comment"
+                      />
+                    </FormControl>
+                    <Button className="addBtn" variant="contained" color="primary" style={commentStyle.commentButtonStyle}>ADD</Button>
+                  </div>
+
                 </CardContent>
               </Card>
             </GridListTile>
-          </GridList>
-        </div>
+          ))}
+        </GridList>
       </div>
     );
   }
