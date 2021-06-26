@@ -136,31 +136,77 @@ const gridListTileStyle = {
 
 class Home extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      postDescription: [], //1st Endpoint 
+      postDetails: [], //2nd Endpoint
+    };
   }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     let data = null;
     let xhr = new XMLHttpRequest();
-    // let that = this;
-
-    xhr.addEventListener("readystatechange", () => {
+    let that = this;
+    xhr.addEventListener('readystatechange', function () {
       if (this.readyState === 4) {
-        console.log(this.responseText);
+        that.setState({
+          postDescription: JSON.parse(this.responseText).data,
+        });
+        that.getPostDetails();
       }
-    })
-
-    // xhr.onreadystatechange = function() {
-    //   if (xhr.readyState === 4 && xhr.status === 200) {
-    //      console.log(xhr.response);
-    //   }
-
+    });
     xhr.open("GET", "https://graph.instagram.com/me/media?fields=id,caption&access_token=" + sessionStorage.getItem('access-token'));
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.send(data);
+    xhr.send(data)
   }
 
+  getPostDetails = () => {
+    return this.state.postDescription.map(post => {
+      return this.getPostDetailsById(post.id)
+    });
+  }
+
+  getPostDetailsById = (id) => {
+    let that = this
+    let xhr = new XMLHttpRequest();
+    let data = null
+    console.log("post id here :" + id)
+    xhr.addEventListener('readystatechange', function () {
+      if (this.readyState === 4) {
+        that.setState({
+          postDetails: that.state.postDetails.concat(JSON.parse(this.responseText)),
+        });
+      }
+    });
+    xhr.open("GET", "https://graph.instagram.com/" + id + "?fields=id,media_type,media_url,username,timestamp&access_token=" + sessionStorage.getItem('access-token'))
+    xhr.send(data)
+  }
+
+  searchTextHandler = (searchFor) => {
+    console.log("Search string :" + this.state.postDescription)
+    let posts = this.state.postDescription;
+    let selectedPosts = []
+    posts = posts.filter((post) => {
+      let caption = post.caption.toLowerCase();
+      let enteredStr = searchFor.toLowerCase();
+      if (caption.includes(enteredStr)) {
+        selectedPosts.push(post.id)
+        return true;
+      } else {
+        return false;
+      }
+    })
+    this.setState({
+      postDescription: posts
+    })
+    console.log("selected posts " + selectedPosts)
+    console.log("postDetails " + this.state.postDetails)
+    let postInfo = this.state.postDetails
+    postInfo = postInfo.filter(item => selectedPosts.includes(item.id));
+    this.setState({
+      postDetails: postInfo
+    })
+  }
 
   render() {
     const { classes } = this.props;
