@@ -6,6 +6,7 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import LionelMessi from '../../assests/LionelMessi.jpg';
 
 const Header = (props) => {
 
@@ -22,6 +23,10 @@ const Header = (props) => {
     setAnchorEl(null);
   };
 
+  const onClickLogoHandler = () => {
+    sessionStorage.getItem("access-token") !== null ? props.history.push("/home") : props.history.push("/");
+  }
+
   const profileClickHandler = () => {
     props.history.push("/profile");
   };
@@ -35,7 +40,7 @@ const Header = (props) => {
     <div>
       <header>
         <div className="app-header">
-          <span className="header-title">{props.title}</span>
+        <span className="header-title" onClick={() => { onClickLogoHandler() }}>{props.title}</span>
           {props.showHomePage === "home" && (
             <div className="header-right">
               <Input
@@ -71,6 +76,7 @@ const Header = (props) => {
                 <MenuItem style={{
                   fontSize: "small",
                   fontWeight: "bold",
+                  cursor: "pointer"
                 }} onClick={() => {
                   profileClickHandler();
                 }}>My account</MenuItem>
@@ -81,14 +87,46 @@ const Header = (props) => {
                   style={{
                     fontSize: "small",
                     fontWeight: "bold",
+                    cursor: "pointer"
                   }}
                   onClick={() => {
                     logoutClickHandler();
                   }}>Logout</MenuItem>
               </Menu>
             </div>
-          )}
-        </div>
+          )} 
+          {
+            props.showProfilePage === "profile" && (
+              <div className="header-right">
+                <Avatar
+                  alt="Remy Sharp"
+                  src={LionelMessi}
+                  className="icon-large"
+                  onClick={handleClick}
+                />
+                <Menu
+                  id="fade-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    style={{
+                      fontSize: "medium",
+                      fontWeight: "bold",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => {
+                      logoutClickHandler();
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </div>
+            )}  
+        </div>   
       </header>
     </div>
   );

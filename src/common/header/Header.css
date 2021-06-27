@@ -3,21 +3,20 @@
 .app-header {
 	background-color: #263238;
 	height: 80px;
-	/* width: 100%;
-	padding: 8px 32px 8px 16px; */
 }
 
 .header-title {
 	color: #fff;
 	float: left;
-    padding: 25px;
-    font-size: 18px;
+  padding: 25px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 .header-right{
 	float:right;
-    margin-right: 50px;
-    padding: 20px;
+  margin-right: 50px;
+  padding: 20px;
 }
 
 .search-field{
