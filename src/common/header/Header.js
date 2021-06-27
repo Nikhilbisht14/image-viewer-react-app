@@ -14,23 +14,25 @@ const Header = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
-    const myMenu = document.querySelector("#simple-menu");
-    myMenu.style.marginTop = '48px';
     setAnchorEl(event.currentTarget);
   };
 
+  //Close menu 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  //Get details of profile pictures
   const onClickLogoHandler = () => {
     sessionStorage.getItem("access-token") !== null ? props.history.push("/home") : props.history.push("/");
   }
 
+  //Redirect to profile page.
   const profileClickHandler = () => {
     props.history.push("/profile");
   };
 
+  //Redirect to login page after logout.
   const logoutClickHandler = () => {
     sessionStorage.removeItem("access-token");
     props.history.push("/");
@@ -95,7 +97,7 @@ const Header = (props) => {
               </Menu>
             </div>
           )} 
-          {
+           {
             props.showProfilePage === "profile" && (
               <div className="header-right">
                 <Avatar
