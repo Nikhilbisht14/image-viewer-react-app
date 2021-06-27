@@ -24,7 +24,6 @@ const styles = theme => ({
     }
 })
 
-
 class Login extends Component {
     constructor() {
         super();
@@ -49,10 +48,10 @@ class Login extends Component {
 
     /* Event Triggers When Login Button Pressed */
     loginClickHandler = () => {
-        let tempUsername = "test";
-        let tempPassword = "test@123";
+        let tempUsername = "nikhil";
+        let tempPassword = "nikhil@1234";
         let accessToken =
-            "IGQVJVOTRaTGR6MEFldEtLSTZAvYi15U2R3UG81eFN2WV9sei1FZAHdBdFFtck5aWHNzaW9rcWFPeWFkZAjMxVUZArQ1dmSVZASaVpUaU1RU0tnUGExM052RkRrMVgyemV6UGFKVnRxbkx4Y0EtbjdrYlE0S19jTjhnYkozZA3Fz";
+            "IGQVJVSmxhUHQ0REg3N3QzcS1idHFPQ2Y3WFFLc3pyU21UbkJyQTFUSXQ5RUFDdkxwWk5qSThwYkVIS1llX05LSUxkS3QzTEdFZAzZAZAdlRxT1FxSXluRk0xV2szTjg4M1RlTXY4UnV0MTdJX0dhMFdOck9USkc2LVMyR3hF";
 
         /* Initial Set usernamePasswordIncorrect state as display none */
         this.setState({ usernamePasswordIncorrect: "dispNone" });
@@ -71,12 +70,14 @@ class Login extends Component {
             this.state.username === tempUsername &&
             this.state.loginPassword === tempPassword
         ) {
+            /* save access-token in session storage */
             window.sessionStorage.setItem(
                 "access-token",
                 accessToken
-            ); /* save access-token in session storage */
+            );
+
             //redirect to home page
-            this.props.history.push('/home');
+            this.props.history.replace("/home");
         } else {
             if (this.state.username !== "" && this.state.loginPassword !== "") {
                 this.setState({ usernamePasswordIncorrect: "dispBlock" });
@@ -95,6 +96,7 @@ class Login extends Component {
                     history={this.props.history}
                 />
                 <div className="card-container">
+                    {/* Login form */}
                     <Card variant="outlined" className="login-card">
                         <CardContent>
                             <Typography variant="headline" component="h2">
@@ -137,7 +139,7 @@ class Login extends Component {
                             <br />
                             <br />
                             {/* Login Button */}
-                            <FormControl className={classes.buttonControl} required> 
+                            <FormControl className={classes.buttonControl} required>
                                 <Button
                                     variant="contained"
                                     color="primary"
