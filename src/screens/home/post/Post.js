@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Post.css';
-import LionelMessi from '../../../assests/LionelMessi.jpg'
+import LionelMessi from '../../../assests/LionelMessi.jpg';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIconBorder from '@material-ui/icons/FavoriteBorder';
@@ -22,7 +22,6 @@ const styles = theme => ({
     media: {
         height: 0,
         paddingTop: '60%',
-        cursor: 'pointer'
     },
     formControl: {
         display: 'flex',
@@ -81,7 +80,7 @@ class Post extends Component {
         });
     }
 
-    //Add Comments To Specific Post
+    //Add Comments To Specific Post And Clear Comment Input Field Value 
     commentAddHandler = () => {
         if (this.state.comment === '') {
             return
@@ -92,7 +91,7 @@ class Post extends Component {
         })
     }
 
-    // Toggle the like icon And Increase And Descrease Likes
+    // Toggle the Like Icon And Increase And Descrease Likes
     likeClickHandler = () => {
         if (this.state.isLiked) {
             this.setState({ isLiked: false });
@@ -106,6 +105,7 @@ class Post extends Component {
         }
     }
 
+    //Convert TimeStamp Into Specific Date Format
     convertTimeStampIntoDateFormat = (newDate) => {
         let date = new Date(newDate);
         let dd = date.getDate();
@@ -132,6 +132,7 @@ class Post extends Component {
             }
         });
 
+        //Render Post Details Into Card Component 
         return (
             <div>
                 <Card style={{ cardStyle }} variant="outlined">

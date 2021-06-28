@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Login from "../screens/login/Login";
-import Home from "../screens/home/Home";
-import Profile from "../screens/profile/Profile";
+import Login from "./login/Login";
+import Home from "./home/Home";
+import Profile from "./profile/Profile";
 
+//Routing
 class Controller extends Component {
   render() {
     return (
