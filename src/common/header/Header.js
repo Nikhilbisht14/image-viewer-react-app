@@ -1,103 +1,111 @@
 import React from "react";
 import "./Header.css";
+import LionelMessi from '../../assests/LionelMessi.jpg'
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import LionelMessi from '../../assests/LionelMessi.jpg';
 
 const Header = (props) => {
-
-  //for logout and My account 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  //Click On Profile Picture 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  //Close menu 
+  //Close Menu Item
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  //Get details of profile pictures
+  //Click On Profile Picture 
   const onClickLogoHandler = () => {
     sessionStorage.getItem("access-token") !== null ? props.history.push("/home") : props.history.push("/");
   }
 
-  //Redirect to profile page.
+  //Redirect TO Profile Page
   const profileClickHandler = () => {
     props.history.push("/profile");
   };
 
-  //Redirect to login page after logout.
+  //Remove Access Token From Session Storage And Redirect To Login Page Again
   const logoutClickHandler = () => {
     sessionStorage.removeItem("access-token");
     props.history.push("/");
   };
 
+  //Render UI Inside Header Section When Appropriate Screen Matches e.g:-Home,Profile
   return (
     <div>
       <header>
         <div className="app-header">
-        <span className="header-title" onClick={() => { onClickLogoHandler() }}>{props.title}</span>
+          <span className="header-title" onClick={() => { onClickLogoHandler() }}>{props.title}</span>
           {props.showHomePage === "home" && (
             <div className="header-right">
               <Input
-                id="search"
+                id="search-box"
                 type="search"
                 className="search-field"
                 variant="outlined"
                 placeholder="Search…"
+                onChange={(e) => { props.searchHandler(e.target.value) }}
                 startAdornment={
-                  <InputAdornment position="start"
+                  <InputAdornment
                     variant="standard"
+                    position="start"
                     id="searchBoxIcon"
-                    style={{ backgroundColor: "#c0c0c0" }}>
+                    style={{ backgroundColor: "#c0c0c0" }}
+                  >
                     <SearchOutlinedIcon />
                   </InputAdornment>
                 }
                 disableUnderline={true}
               />
               <Avatar
-                id="myHeaderMenu"
                 alt="Remy Sharp"
-                src=""
+                src={LionelMessi}
                 className="icon-large"
                 onClick={handleClick}
               />
               <Menu
-                id="simple-menu"
+                id="fade-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem style={{
-                  fontSize: "small",
-                  fontWeight: "bold",
-                  cursor: "pointer"
-                }} onClick={() => {
-                  profileClickHandler();
-                }}>My account</MenuItem>
-
-                <hr className="menu-line"></hr>
-
                 <MenuItem
                   style={{
-                    fontSize: "small",
+                    fontSize: "medium",
+                    fontWeight: "bold",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => {
+                    profileClickHandler();
+                  }}
+                >
+                  My account
+                </MenuItem>
+                <hr className="menu-line" />
+                <MenuItem
+                  style={{
+                    fontSize: "medium",
                     fontWeight: "bold",
                     cursor: "pointer"
                   }}
                   onClick={() => {
                     logoutClickHandler();
-                  }}>Logout</MenuItem>
+                  }}
+                >
+                  Logout
+                </MenuItem>
               </Menu>
             </div>
-          )} 
-           {
+          )}
+          {
             props.showProfilePage === "profile" && (
               <div className="header-right">
                 <Avatar
@@ -127,8 +135,8 @@ const Header = (props) => {
                   </MenuItem>
                 </Menu>
               </div>
-            )}  
-        </div>   
+            )}
+        </div>
       </header>
     </div>
   );
