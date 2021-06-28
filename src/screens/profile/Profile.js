@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteIconBorder from '@material-ui/icons/FavoriteBorder';
 import FavoriteIconFill from '@material-ui/icons/Favorite';
 import { withStyles } from '@material-ui/core/styles';
-import instaLogo from "../../assets/insta.png";
+import LionelMessi from '../../assests/LionelMessi.jpg';
 
 const styles = {
   media: {
@@ -56,8 +56,8 @@ class Profile extends Component {
       follows: Math.floor(Math.random() * 10) + 1,
       followedBy: Math.floor(Math.random() * 10) + 1,
       isLiked: false,
-      user: "kavisha",
-      fullname: "Kavisha Modi",
+      user: "Nikhil",
+      fullname: "Nikhil Singh Bisht",
       newFullName: '',
       editModalIsOpen: false,
       fullNameRequired: 'dispNone',
@@ -215,6 +215,9 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     let likeCount = this.state.likes;
+    if (sessionStorage.getItem("access-token") === null) {
+      this.props.history.push("/");
+    }
     return (
       <div>
         <Header
@@ -226,7 +229,7 @@ class Profile extends Component {
           <Avatar className="profile-picture-avatar"
             alt="User Image"
             style={{ cursor: 'pointer' }}
-            src={instaLogo}
+            src={LionelMessi}
           />
           <span style={{ marginLeft: "20px" }}>
             <div className={classes.profileSummary}> {this.state.user} <br /><br />
@@ -284,7 +287,7 @@ class Profile extends Component {
             className={classes.openedImageObjModal}>
             <div className={classes.openedImageObjContainer}>
               <div className={classes.openedImageObjContainerRow1}>
-                <img style={{ height: '100%', width: '100%' }}
+                <img style={{ cursor: 'pointer', height: '100%', width: '100%' }}
                   src={this.state.postMediaObj.media_url}
                   alt={this.state.openedPostObj.caption} />
               </div>
@@ -292,8 +295,8 @@ class Profile extends Component {
                 <div className={classes.openedImageObjContainerRow21}>
                   <Avatar
                     alt="User Image"
-                    src={instaLogo}
-                    style={{ width: "50px", height: "50px", margin: '10px' }} />
+                    src={LionelMessi}
+                    style={{ cursor: 'pointer', width: "50px", height: "50px", margin: '10px' }} />
                   <Typography component="p" style={{ fontWeight: 'bold' }}>
                     {this.state.user}
                   </Typography>
